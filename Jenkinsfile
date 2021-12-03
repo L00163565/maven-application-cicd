@@ -8,7 +8,6 @@ pipeline {
     agent any 
 	
 	tools {
-	jdk 'jdk 9.0.4'
         maven 'maven 3.8.1'
 	'org.jenkinsci.plugins.docker.commons.tools.DockerTool' 'docker'
     }
