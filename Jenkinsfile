@@ -1,7 +1,8 @@
 pipeline {
     
 	environment {
-        registry = "https://hub.docker.com/"
+        registry = "snehalshirsath/maven-app-image-lab3"
+	registryCredential = 'docker_cred'
         dockerImage = ""
     }
     agent any 
