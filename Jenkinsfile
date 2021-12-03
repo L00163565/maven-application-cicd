@@ -1,5 +1,9 @@
 pipeline {
     
+	environment {
+        registry = "https://hub.docker.com/"
+        dockerImage = ""
+    }
     agent any 
 	
 	tools {
@@ -32,7 +36,7 @@ pipeline {
             }
         }
         
-	stage('Build image') {
+	    stage('Build image') {
             steps{
                 script {
                     dockerImage = docker.build registry + ":$BUILD_NUMBER"
@@ -49,6 +53,13 @@ pipeline {
                 }
             }
         }
+		
+		stage('Deploy App') {
+	        steps {
+                script {
+                    kubernetesDeploy(configs: "deployment.yaml", kubeconfigId: "mykubeconfig")
+                }
+            }
+        }
     }
 }
-
