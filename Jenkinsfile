@@ -8,7 +8,7 @@ pipeline {
 	
 	tools {
         maven 'maven 3.8.4'
-	docker 'docker'
+	docker 'latest'
     }
     
     stages {
