@@ -20,48 +20,5 @@ pipeline {
             }
         }
 		
-        
-        stage('Build') {
-            steps {
-                sh 'mvn -B -DskipTests clean package'
-            }
-        }
-        
-        stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
-            }
-        }
-        
-	    stage('Build image') {
-            steps{
-                script {
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
-                }
-            }
-        }
-
-        stage('Push Image') {
-            steps{
-                script {
-                docker.withRegistry( "" ) {
-                    dockerImage.push()
-                    }
-                }
-            }
-        }
-		
-		stage('Deploy App') {
-	        steps {
-                script {
-                    kubernetesDeploy(configs: "deployment.yaml", kubeconfigId: "mykubeconfig")
-                }
-            }
-        }
     }
 }
